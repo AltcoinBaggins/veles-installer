@@ -115,6 +115,7 @@ function check_dependencies() {
   command -v tar >/dev/null 2>&1        && HAS_TAR=1        || HAS_TAR==''
   command -v useradd -h >/dev/null 2>&1 && HAS_USERADD=1    || HAS_USERADD==''
   command -v systemctl >/dev/null 2>&1  && HAS_SYSTEMCTL==1 || HAS_SYSTEMCTL=''
+  command -v systemctl >/dev/null 2>&1  && HAS_UFW==1       || HAS_UFW=''
 }
 
 function assert_common_dependencies() {
@@ -162,7 +163,7 @@ function check_installation() {
 
 function check_ufw() {
   echo -en "${ST}   Checking whether UFW firewall is present ... "
-  if [ -f "/sbin/ufw" ] && ufw status | grep -wq 'active'; then 
+  if [ -n $HAS_UFW ] && ufw status | grep -wq 'active'; then 
     echo "yes"
     setup_ufw
   else
@@ -574,7 +575,7 @@ if [ "${ARG1}" == "--suffix" ]; then
   echo -e "\n[ $0: Using suffix ${ARG2} for current installation / update ]"
   MN_SUFFIX="${ARG2}"
   COIN_NAME_SHORT="${COIN_NAME}${MN_SUFFIX}"
-  DATADIR_PATH='/home/veles/.${COIN_NAME_SHORT}'
+  DATADIR_PATH="/home/veles/.${COIN_NAME_SHORT}"
 fi
 
 print_logo
