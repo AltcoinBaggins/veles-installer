@@ -145,13 +145,17 @@ function assert_update_dependencies() {
 }
 
 function check_installation() {
-  echo -en "\n${ST} Checking whether ${COIN_NAME} is already installed ... "
-  #if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "${INSTALL_PATH}/${COIN_DAEMON}" ] ; then
-  if [ -e "${INSTALL_PATH}/${COIN_DAEMON}" ] ; then
-    echo "yes"
-    start_update
+  if ! [ "${ARG1}" == "--suffix" ]; then
+    echo -en "\n${ST} Checking whether ${COIN_NAME} is already installed ... "
+    #if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "${INSTALL_PATH}/${COIN_DAEMON}" ] ; then
+    if [ -e "${INSTALL_PATH}/${COIN_DAEMON}" ] ; then
+      echo "yes"
+      start_update
+    else
+      echo "no"
+      start_installation
+    fi
   else
-    echo "no"
     start_installation
   fi
 }
@@ -568,8 +572,8 @@ fi
 if [ "${ARG1}" == "--suffix" ]; then
   [[ -n $ARG2 ]] || perr "Option --suffix needs a value to be provided, eg. --suffix 2"
   echo -e "\n[ $0: Using suffix ${ARG2} for current installation / update ]"
-  MN_SUFFIX="-${ARG2}"
-  COIN_NAME_SHORT+="${MN_SUFFIX}"
+  MN_SUFFIX="${ARG2}"
+  COIN_NAME_SHORT="${COIN_NAME}${MN_SUFFIX}"
   DATADIR_PATH='/home/veles/.${COIN_NAME_SHORT}'
 fi
 
