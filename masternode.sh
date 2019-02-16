@@ -165,7 +165,11 @@ function check_ufw() {
   echo -en "${ST}   Checking whether UFW firewall is present ... "
   if [ -n $HAS_UFW ] && ufw status | grep -wq 'active'; then 
     echo "yes"
-    setup_ufw
+    if [[ -n "$3" ]] && [ "${3}" == '--skip-ufw' ]; then
+      echo "   - ( skipping ufw setup )"
+    else
+      setup_ufw
+    fi
   else
     echo "no"
   fi
