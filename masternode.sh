@@ -359,18 +359,18 @@ function create_key() {
   fi
   if [[ -z "$COINKEY" ]]; then
     echo -en "${ST}   Generating masternode private key ...                               "
-    ${INSTALL_PATH}/$COIN_DAEMON -daemon >/dev/null 2>&1
+    ${INSTALL_PATH}/$COIN_DAEMON -daemon -rpcport=5494 >/dev/null 2>&1
     sleep ${KEY_GEN_TIMEOUT}
     if [ -z "$(ps axo cmd:100 | grep $COIN_DAEMON)" ]; then
       perr "${RED}${COIN_NAME_SHORT} server couldn not start. Check /var/log/syslog for errors.${NC}"
     fi
-    COINKEY=$(${INSTALL_PATH}/${COIN_CLI} masternode genkey)
+    COINKEY=$(${INSTALL_PATH}/${COIN_CLI}  -rpcport=5494 masternode genkey)
     if [ "$?" -gt "0" ];then
       echo -e "${RED}Wallet not fully loaded. Let us wait and try again to generate the Private Key${NC}"
       sleep $((KEY_GEN_TIMEOUT * 2))
-      COINKEY=$(${INSTALL_PATH}/${COIN_CLI} masternode genkey)
+      COINKEY=$(${INSTALL_PATH}/${COIN_CLI}  -rpcport=5494 masternode genkey)
     fi
-    ${INSTALL_PATH}/${COIN_CLI} stop >/dev/null 2>&1
+    ${INSTALL_PATH}/${COIN_CLI}  -rpcport=5494 stop >/dev/null 2>&1
   fi
   pok
 }
