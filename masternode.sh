@@ -15,7 +15,7 @@ DATADIR_PATH='/home/veles/.veles'
 COIN_DAEMON='velesd'
 COIN_CLI='veles-cli'
 INSTALL_PATH='/usr/local/bin'
-COIN_TGZ_URL='https://github.com/Velescore/Veles/releases/download/v0.17.0.21/velesLinux.tar.gz'
+COIN_TGZ_URL='https://github.com/Velescore/Veles/releases/download/v0.17.0.22/velesLinux.tar.gz'
 COIN_NAME='Veles Core'
 COIN_NAME_SHORT='veles'
 COIN_PORT=21337
@@ -574,7 +574,7 @@ if [ "${ARG1}" == "--suffix" ]; then
   [[ -n $ARG2 ]] || perr "Option --suffix needs a value to be provided, eg. --suffix 2"
   echo -e "\n[ $0: Using suffix ${ARG2} for current installation / update ]"
   MN_SUFFIX="${ARG2}"
-  COIN_NAME_SHORT="${COIN_NAME}${MN_SUFFIX}"
+  COIN_NAME_SHORT="${COIN_NAME_SHORT}${MN_SUFFIX}"
   DATADIR_PATH="/home/veles/.${COIN_NAME_SHORT}"
 fi
 
