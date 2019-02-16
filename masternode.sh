@@ -223,11 +223,11 @@ function create_user() {
     echo -en "${ST}     Creating new user account ${YELLOW}${USER}${NC} ...                               "
     useradd -m $USER && pok || perr
     # TODO: move to another function
-    echo -en "${ST}     Creating new datadir ...                                          "
-    su - $USER -c "mkdir ${DATADIR_PATH} >/dev/null 2>&1" || perr	"Failed to create datadir: ${DATADIR_PATH}"
-    su - $USER -c "touch ${DATADIR_PATH}/${CONFIG_FILENAME} >/dev/null 2>&1" || perr "Failed to create config file: ${DATADIR_PATH}/${CONFIG_FILENAME}"
-    pok
   fi
+  echo -en "${ST}     Creating new datadir ...                                          "
+  su - $USER -c "mkdir ${DATADIR_PATH} >/dev/null 2>&1" || perr	"Failed to create datadir: ${DATADIR_PATH}"
+  su - $USER -c "touch ${DATADIR_PATH}/${CONFIG_FILENAME} >/dev/null 2>&1" || perr "Failed to create config file: ${DATADIR_PATH}/${CONFIG_FILENAME}"
+  pok
 }
 
 function setup_ufw() {
