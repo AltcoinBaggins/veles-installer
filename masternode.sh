@@ -363,7 +363,7 @@ function create_key() {
   fi
   if [[ -z "$COINKEY" ]]; then
     echo -en "${ST}   Generating masternode private key ...                               "
-    ${INSTALL_PATH}/$COIN_DAEMON -daemon -rpcport=5494 >/dev/null 2>&1
+    ${INSTALL_PATH}/$COIN_DAEMON -daemon -rpcport=5494 -port=21338 >/dev/null 2>&1
     sleep ${KEY_GEN_TIMEOUT}
     if [ -z "$(ps axo cmd:100 | grep $COIN_DAEMON)" ]; then
       perr "${RED}${COIN_NAME_SHORT} server couldn not start. Check /var/log/syslog for errors.${NC}"
